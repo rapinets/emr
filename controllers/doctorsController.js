@@ -8,6 +8,13 @@ exports.getAllDoctors = async (req, res) => {
   res.json(doctors)
 }
 
+exports.getDoctorById = async (req, res) => {
+  const doctors = await readData(filePath)
+  const doctor = doctors.find((d) => d.id === req.params.id)
+  if (doctor) res.json(doctor)
+  else res.status(404).json({ error: 'Лікаря не знайдено' })
+}
+
 exports.createDoctor = async (req, res) => {
   const doctors = await readData(filePath)
   const newDoc = { id: uuidv4(), ...req.body }
